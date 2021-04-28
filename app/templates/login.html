@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}
+    {{super()}}
+    Login
+{% endblock %}
+
+
+
+{% block content %}
+    <h1>Inicia sesion</h1>
+    <div class="container">
+        {{ wtf.quick_form(login_form) }}
+    </div>
+    <h3><a href="{{url_for('auth.signup')}}">O ingresa aqui si no tienes una cuenta</a></h3>
+
+{% endblock %}

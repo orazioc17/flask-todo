@@ -1,0 +1,39 @@
+<!-- Sintaxis  de jinja para heredar un html, aqui se esta renderizando base.html -->
+{% extends 'base.html' %}
+
+<!-- Aqui se importa el documento que contiene los macros para usarlos -->
+{% import 'macros.html' as macros %}
+
+{% import 'bootstrap/wtf.html' as wtf %}
+
+<!-- Wow, aqui se hereda el titulo que ya esta en el html base para concatenarle lo que queremos -->
+{% block title %}
+    {{ super() }}
+    Bienvenido
+{% endblock %}
+
+{% block content %}
+    {% if username %}
+        <h1>Bienvenido, {{username | capitalize}}</h1>
+    {% endif %}
+    <!-- Esta es la forma de usar estructuras de control con flask -->
+    {% if user_ip %}
+        <h3>Tu ip es {{user_ip}}</h3>
+    {% else %}
+        <a href="{{ url_for('index') }}">Ir a inicio</a>
+    <!-- Siempre hay que terminar los if con este endif -->
+    {% endif %}
+
+    <div class="container">
+        <h2>Crea una nueva tarea</h2>
+
+        {{ wtf.quick_form(todo_form) }}
+    </div>
+
+    <ul class="list-group">
+        {% for todo in to_dos %}
+            {{ macros.render_todo(todo, delete_form, update_form) }}
+        {% endfor %}
+    </ul>
+{% endblock %}
+
